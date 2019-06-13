@@ -93,42 +93,7 @@ const carsControll = {
       data: details
 
     });
-  }, // End of Update Price of car
-  viewCars: (req, res) => {
-    const { status, minPrice, maxPrice } = req.query;
-    if (status === 'available') {
-      const available = cars.find(car => car.status === 'sold');
-      if (!available) {
-        return res.send({
-          status: 200,
-          data: 'There are no car available'
-        });
-      }
-      return res.send({
-        status: 200,
-        data: [available]
-      });
-    }
-    if (minPrice !== undefined && maxPrice !== undefined) {
-      const available = cars.filter(elem => elem.price >= minPrice && elem.price <= maxPrice);
-
-      if (!available) {
-        return res.send({
-          status: 200,
-          data: 'There are no car available'
-        });
-      }
-      res.status(200).send({
-        status: res.statusCode,
-        data: available
-      });
-    }
-    return res.status(400).send({
-      status: res.statusCode,
-      data: 'Something went wrong'
-    });
-  }
-
+  } // End of Update Price of car
 };
 
 exports.default = carsControll;

@@ -77,7 +77,7 @@ router.post('/car', async (req, res) => {
 });
 
 // User can Update the Price
-router.put('/car/:id/price', (req, res) => {
+router.put('/:id/price', (req, res) => {
   const rawData = _lodash2.default.pick(req.body, ['price']);
   const details = cars.find(car => car.id === parseInt(req.params.id, 10));
   if (!details) {
@@ -88,7 +88,7 @@ router.put('/car/:id/price', (req, res) => {
     });
   }
   if (req.user.id !== details.owner) {
-    return res.send({
+    return res.status(400).send({
       status: res.statusCode,
       data: 'cannot perform this action'
     });

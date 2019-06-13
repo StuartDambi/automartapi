@@ -8,38 +8,43 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
+const { cardb, validate } = require('../models/cars');
+
 const router = _express2.default.Router();
-const cars = [{
-  id: 1,
-  owner: 2,
-  state: 'new',
-  price: '$100',
-  manufacturer: 'toyota',
-  model: 'BMW',
-  body_type: 'car',
-  created_on: '20/10/09'
-}, {
-  id: 1,
-  owner: 2,
-  state: 'new',
-  price: '$100',
-  manufacturer: 'toyota',
-  model: 'BMW',
-  body_type: 'car',
-  created_on: '20/10/09'
-}];
 
 // Return all the cars
 router.get('/', (req, res) => {
-  res.send(cars);
+  res.send(cardb);
 });
 
 // return specific car
 router.get('/:id', (req, res) => {
   // eslint-disable-next-line radix
-  const car = cars.find(c => c.id === parseInt(req.params.id));
+  const car = cardb.find(c => c.id === parseInt(req.params.id));
   if (!car) res.status(404).send('The car with the given ID doesnt exist');
-  res.send(car);
+  res.status(200).send({
+    status: res.statusCode,
+    data: car
+  });
+});
+
+// Creating an AD
+router.post('/add', async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const newCar = {
+    state: req.body.state,
+    price: req.body.price,
+    manufacturer: req.body.manufacturer,
+    model: req.body.model,
+    body_type: req.body.body_type
+  };
+  undefined.newCar = await newCar.save();
+  return res.status(200).send({
+    status: res.statusCode,
+    data: newCar
+  });
 });
 
 module.exports = router;

@@ -34,4 +34,15 @@ router.get('/', (req, res) => {
   res.send(cars);
 });
 
+// return specific car
+router.get('/:id', (req, res) => {
+  // eslint-disable-next-line radix
+  const car = cars.find(c => c.id === parseInt(req.params.id));
+  if (!car) res.status(404).send('The car with the given ID doesnt exist');
+  res.status(200).send({
+    status: res.statusCode,
+    data: car
+  });
+});
+
 module.exports = router;
