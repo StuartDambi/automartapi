@@ -4,18 +4,6 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _joi = require('@hapi/joi');
-
-var _joi2 = _interopRequireDefault(_joi);
-
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _carController = require('../controllers/carController');
 
 var _carController2 = _interopRequireDefault(_carController);
@@ -34,67 +22,12 @@ router.get('/', (req, res) => {
 });
 
 // return specific car
-router.get('/:id', _carController2.default.viewCars);
+router.get('/:id', _carController2.default.viewCar);
 
 // Creating an AD
-router.post('/car', async (req, res) => {
-  // pick the values from the users
-  const rawData = _lodash2.default.pick(req.body, ['state', 'status', 'price', 'manufacturer', 'model', 'body_type']);
-  const schema = _joi2.default.object().keys({
-    state: _joi2.default.string().required(),
-    status: _joi2.default.string().required(),
-    price: _joi2.default.string().alphanum().required(),
-    manufacturer: _joi2.default.string().required(),
-    model: _joi2.default.string().required(),
-    body_type: _joi2.default.string().required()
-  });
-  const results = _joi2.default.validate(rawData, schema);
-
-  if (results.error === null) {
-    // update data
-    rawData.id = cars.length + 1;
-    rawData.owner = req.user.id;
-    rawData.date_created = (0, _moment2.default)().format();
-
-    // update the list of cars
-    cars.push(rawData);
-    res.status(201).send({
-      status: res.statusCode,
-      message: 'Your car has been posted',
-      data: rawData
-    });
-  } else {
-    res.status(400).send({
-      status: res.statusCode,
-      data: results.error
-
-    });
-  }
-});
+router.post('/car', _carController2.default.postCar);
 
 // User can Update the Price
-router.put('/:id/price', (req, res) => {
-  const rawData = _lodash2.default.pick(req.body, ['price']);
-  const details = cars.find(car => car.id === parseInt(req.params.id, 10));
-  if (!details) {
-    return res.status(404).send({
-      status: res.statusCode,
-      data: 'not found'
-
-    });
-  }
-  if (req.user.id !== details.owner) {
-    return res.status(400).send({
-      status: 400,
-      data: 'cannot perform this action'
-    });
-  }
-  details.price = rawData.price;
-  return res.send({
-    status: res.statusCode,
-    data: details
-
-  });
-});
+router.put('/:id/price', _carController2.default.updatePrice);
 
 module.exports = router;

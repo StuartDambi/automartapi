@@ -37,6 +37,14 @@ function validateUser(user) {
   });
   return _joi2.default.validate(user, schema);
 }
+function authenticateUser(req) {
+  const schema = {
+    email: _joi2.default.string().min(3).max(255).required().email(),
+    password: _joi2.default.string().min(5).max(255).required()
+  };
+  return _joi2.default.validate(req, schema);
+}
 
 exports.User = User;
 exports.validate = validateUser;
+exports.authenticateUser = authenticateUser;

@@ -46,4 +46,5 @@ const cars = [{
   id: 4,
   date_created: '2019-05-28T19:39:29+03:00'
 }];
+
 exports.cars = cars;

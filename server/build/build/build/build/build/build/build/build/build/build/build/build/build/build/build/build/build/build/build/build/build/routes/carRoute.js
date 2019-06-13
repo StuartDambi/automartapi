@@ -4,46 +4,55 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _carController = require('../controllers/carController');
+
+var _carController2 = _interopRequireDefault(_carController);
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-const { cardb, validate } = require('../models/cars');
+const { cars } = require('../models/carsdb');
 
 const router = _express2.default.Router();
 
 // Return all the cars
 router.get('/', (req, res) => {
-  res.send(cardb);
+  res.status(200).send({ status: res.statusCode, data: cars });
 });
 
 // return specific car
-router.get('/:id', (req, res) => {
-  // eslint-disable-next-line radix
-  const car = cardb.find(c => c.id === parseInt(req.params.id));
-  if (!car) res.status(404).send('The car with the given ID doesnt exist');
-  res.status(200).send({
-    status: res.statusCode,
-    data: car
-  });
-});
+router.get('/:id', _carController2.default.viewCars);
 
 // Creating an AD
-router.post('/add', async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+router.post('/car', _carController2.default.postCar);
 
-  const newCar = {
-    state: req.body.state,
-    price: req.body.price,
-    manufacturer: req.body.manufacturer,
-    model: req.body.model,
-    body_type: req.body.body_type
-  };
-  undefined.newCar = await newCar.save();
-  return res.status(200).send({
+// User can Update the Price
+router.put('/:id/price', (req, res) => {
+  const rawData = _lodash2.default.pick(req.body, ['price']);
+  const details = cars.find(car => car.id === parseInt(req.params.id, 10));
+  if (!details) {
+    return res.status(404).send({
+      status: res.statusCode,
+      data: 'not found'
+
+    });
+  }
+  if (req.user.id !== details.owner) {
+    return res.status(400).send({
+      status: 400,
+      data: 'cannot perform this action'
+    });
+  }
+  details.price = rawData.price;
+  return res.send({
     status: res.statusCode,
-    data: newCar
+    data: details
+
   });
 });
 
