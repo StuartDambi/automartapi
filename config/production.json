@@ -1,0 +1,6 @@
+{
+    "name": "Automart API - Production",
+    "mail": {
+        "host": "prod-mail-server"
+    }
+}

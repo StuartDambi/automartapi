@@ -1,0 +1,70 @@
+{
+  "name": "autamartapi",
+  "version": "1.0.0",
+  "description": "test_site",
+  "main": "../server/app.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node server/build/app.js",
+    "test": "nyc mocha --require babel-core/register server/test/**.spec.js --exit",
+    "prestart": "npm run lint && npm run build",
+    "build": "babel server --out-dir server/build",
+    "lint": "eslint server",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StuartDambi/automartapi.git"
+  },
+  "keywords": [
+    "ecommerce"
+  ],
+  "author": "StuartDambi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StuartDambi/automartapi/issues"
+  },
+  "homepage": "https://github.com/StuartDambi/automartapi#readme",
+  "dependencies": {
+    "@hapi/joi": "^15.0.3",
+    "babel-istanbul": "^0.12.2",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.1.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.0.0",
+    "env2": "^2.2.2",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "save": "^2.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "babel-watch": "^7.0.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-connect": "^5.7.0",
+    "mocha": "^6.1.4",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.19.0",
+    "nyc": "^14.1.1"
+  },
+  "nyc": {
+    "exclude": [
+      "**/test/**"
+    ]
+  }
+}
