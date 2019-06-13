@@ -1,0 +1,7 @@
+{
+    "jwtPrivateKey": "SECRET_KEY",
+    "name": "Automart API - Development",
+    "mail": {
+        "password": ""
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Automart API - Development",
+    "mail": {
+        "host": "dev-mail-server"
+    }
+}
