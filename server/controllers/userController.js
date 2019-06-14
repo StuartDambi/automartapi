@@ -1,26 +1,71 @@
 import _ from 'lodash';
 import bcrypt from 'bcryptjs';
+import Joi from '@hapi/joi';
+import generatePassword from './helpers/generatePassword';
+// import generateToken from './helpers/utils';
 
-const { User } = require('../models/users');
+const { users } = require('../models/users');
 const { authenticateUser } = require('../models/users');
 
 const usersControll = {
   signUp: async (req, res) => {
-    let user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(400).send('User already registered');
+    // pick the values from the users
+    const rawData = _.pick(req.body, ['email', 'first_name', 'last_name',
+      'password', 'address', 'is_admin']);
+    const schema = Joi.object().keys({
+      email: Joi.string().email(),
+      first_name: Joi.string().alphanum().min(3).max(30)
+        .required(),
+      last_name: Joi.string().alphanum().min(3).max(30)
+        .required(),
+      password: Joi.string(),
+      address: Joi.string().alphanum().min(3).max(30)
+        .required(),
+      is_admin: Joi.boolean(),
+    });
+    // validate the data that has been entered
+    const results = Joi.validate(rawData, schema);
+    if (results.error === null) {
+      const details = users.find(user => user.email === rawData.email);
+      if (details) {
+        return res.status(400).send(
+          {
+            status: res.statusCode,
+            data: 'user already exists',
 
-    user = new User(_.pick(req.body, ['email', 'first_name', 'last_name', 'password', 'address', 'is_admin']));
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-    await user.save();
+          },
+        );
+      }
+      // generate a hashed password
+      const newPassword = await generatePassword(rawData, users.length);
 
-    return res.send(_.pick(user, ['email', 'first_name', 'last_name', 'address']));
+      // update data
+      rawData.id = users.length + 1;
+      rawData.password = newPassword;
+
+      // update the list of users
+      users.push(rawData);
+      return res.status(201).send(
+        {
+          status: res.statusCode,
+          message: 'Account has been created successfully',
+          data: _.pick(rawData, ['id', 'first_name', 'last_name', 'email']),
+        },
+      );
+    }
+    return res.status(400).send(
+      {
+        status: res.statusCode,
+        data: results.error,
+
+      },
+    );
   },
   signIn: async (req, res) => {
     const { error } = authenticateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    const user = await User.findOne({ email: req.body.email });
+    const user = await users.find({ email: req.body.email });
     if (user) return res.status(400).send('Email or password is incorrect');
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);

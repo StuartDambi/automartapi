@@ -6,7 +6,7 @@ var _joi2 = _interopRequireDefault(_joi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const User = [{
+const users = [{
   id: 1,
   email: 'jonathanaurugai@gmail.com',
   first_name: 'Jonathan',
@@ -29,7 +29,7 @@ function validateUser(user) {
     email: _joi2.default.string().email().required(),
     first_name: _joi2.default.string().alphanum().min(3).max(20).required(),
     last_name: _joi2.default.string().alphanum().min(3).max(20).required(),
-    password: _joi2.default.string().regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/).required(),
+    password: _joi2.default.string().required(),
     address: _joi2.default.string().alphanum().min(3).max(30).required(),
     is_admin: _joi2.default.boolean()
   });
@@ -43,6 +43,6 @@ function authenticateUser(req) {
   return _joi2.default.validate(req, schema);
 }
 
-exports.User = User;
+exports.users = users;
 exports.validate = validateUser;
 exports.authenticateUser = authenticateUser;
