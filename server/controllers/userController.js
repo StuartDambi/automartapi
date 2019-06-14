@@ -21,10 +21,10 @@ const usersControll = {
     if (error) return res.status(400).send(error.details[0].message);
 
     const user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(400).send('Invalid Email or Password');
+    if (user) return res.status(400).send('Email or password is incorrect');
 
-    const validPassword = bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send('Invalid Email or Password');
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!validPassword) return res.status(400).send('Email or password is incorrect');
 
     return res.send(true);
   },

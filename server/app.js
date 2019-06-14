@@ -8,6 +8,7 @@ app.use(express.json());
 app.use('/api/v1/cars', carRoute);
 app.use('/api/v1/users', userRoute);
 
+
 // configs
 console.log(`Application name: ${config.get('name')}`);
 // The server port

@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-const available = '/api/v1/car?status=available';
+const available = '/api/v1/cars?status=available';
 const { expect } = _chai2.default;
 _chai2.default.use(_chaiHttp2.default);
 
