@@ -22,5 +22,5 @@ const router = _express2.default.Router();
 router.post('/signup', _auth2.default.validateUserData, _userController2.default.signUp);
 
 // User can signin to the system
-router.post('/signin', _auth2.default.validateUserData);
+router.post('/signin', _userController2.default.signIn);
 module.exports = router;

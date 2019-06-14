@@ -16,12 +16,17 @@ var _userRoute = require('./routes/userRoute');
 
 var _userRoute2 = _interopRequireDefault(_userRoute);
 
+var _authRoute = require('./routes/authRoute');
+
+var _authRoute2 = _interopRequireDefault(_authRoute);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = (0, _express2.default)();
 app.use(_express2.default.json());
 app.use('/api/v1/cars', _carRoute2.default);
 app.use('/api/v1/users', _userRoute2.default);
+app.use('/api/v1/auth', _authRoute2.default);
 
 // configs
 console.log(`Application name: ${_config2.default.get('name')}`);

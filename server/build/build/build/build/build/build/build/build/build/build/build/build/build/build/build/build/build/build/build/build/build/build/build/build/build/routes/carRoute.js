@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 });
 
 // return specific car
-router.get('/:id', _carController2.default.viewCars);
+router.get('/:id', _carController2.default.viewCar);
 
 // Creating an AD
 router.post('/car', _carController2.default.postCar);

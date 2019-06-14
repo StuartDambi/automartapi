@@ -1,11 +1,10 @@
 import _ from 'lodash';
-import bcrypt from 'bcryptjs';
 import Joi from '@hapi/joi';
 import generatePassword from './helpers/generatePassword';
-// import generateToken from './helpers/utils';
+import _ from 'lodash';
+
 
 const { users } = require('../models/users');
-const { authenticateUser } = require('../models/users');
 
 const usersControll = {
   signUp: async (req, res) => {
@@ -60,18 +59,6 @@ const usersControll = {
 
       },
     );
-  },
-  signIn: async (req, res) => {
-    const { error } = authenticateUser(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
-    const user = await users.find({ email: req.body.email });
-    if (user) return res.status(400).send('Email or password is incorrect');
-
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send('Email or password is incorrect');
-
-    return res.send(true);
   },
 };
 module.exports = usersControll;
