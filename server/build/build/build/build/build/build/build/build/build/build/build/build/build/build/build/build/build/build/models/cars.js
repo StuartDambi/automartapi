@@ -1,13 +1,5 @@
 'use strict';
 
-var _joi = require('@hapi/joi');
-
-var _joi2 = _interopRequireDefault(_joi);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
 const cardb = [{
   id: 1,
   owner: 2,
@@ -26,18 +18,32 @@ const cardb = [{
   model: 'BMW',
   body_type: 'car',
   created_on: '20/10/09'
+}, {
+  state: 'used',
+  status: 'sold',
+  price: '400',
+  manufacturer: 'toyota',
+  model: 'range-rover',
+  body_type: 'car',
+  id: 2,
+  date_created: '2019-05-28T19:39:16+03:00'
+}, {
+  state: 'used',
+  status: 'sold',
+  price: '300',
+  manufacturer: 'toyota',
+  model: 'premio',
+  body_type: 'car',
+  id: 3,
+  date_created: '2019-05-28T19:39:22+03:00'
+}, {
+  state: 'used',
+  status: 'sold',
+  price: '200',
+  manufacturer: 'toyota',
+  model: 'premio',
+  body_type: 'car',
+  id: 4,
+  date_created: '2019-05-28T19:39:29+03:00'
 }];
-
-function validateCar(car) {
-  const schema = {
-    state: _joi2.default.string().min(3).max(20),
-    price: _joi2.default.string().min(3).max(20),
-    manufacturer: _joi2.default.string().min(3).max(20),
-    model: _joi2.default.string().min(3).max(20),
-    body_type: _joi2.default.string().min(3).max(20)
-  };
-  return _joi2.default.validate(car, schema);
-}
-
-exports.validate = validateCar;
 exports.cardb = cardb;

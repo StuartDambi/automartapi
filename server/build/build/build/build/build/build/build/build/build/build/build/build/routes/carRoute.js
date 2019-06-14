@@ -29,10 +29,12 @@ const { cars } = require('../models/carsdb');
 const router = _express2.default.Router();
 
 // Return all the cars
-router.get('/', _carController2.default.findCar);
+router.get('/', (req, res) => {
+  res.send(cars);
+});
 
 // return specific car
-router.get('/:id', () => {});
+router.get('/:id', _carController2.default.viewCars);
 
 // Creating an AD
 router.post('/car', async (req, res) => {

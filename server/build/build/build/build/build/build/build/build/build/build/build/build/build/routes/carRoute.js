@@ -16,6 +16,10 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+var _carController = require('../controllers/carController');
+
+var _carController2 = _interopRequireDefault(_carController);
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -25,20 +29,10 @@ const { cars } = require('../models/carsdb');
 const router = _express2.default.Router();
 
 // Return all the cars
-router.get('/', (req, res) => {
-  res.send(cars);
-});
+router.get('/', _carController2.default.findCar);
 
 // return specific car
-router.get('/:id', (req, res) => {
-  // eslint-disable-next-line radix
-  const car = cars.find(c => c.id === parseInt(req.params.id));
-  if (!car) res.status(404).send('The car with the given ID doesnt exist');
-  res.status(200).send({
-    status: res.statusCode,
-    data: car
-  });
-});
+router.get('/:id', () => {});
 
 // Creating an AD
 router.post('/car', async (req, res) => {
@@ -89,7 +83,7 @@ router.put('/:id/price', (req, res) => {
   }
   if (req.user.id !== details.owner) {
     return res.status(400).send({
-      status: res.statusCode,
+      status: 400,
       data: 'cannot perform this action'
     });
   }

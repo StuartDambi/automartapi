@@ -12,12 +12,15 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
 const { cars } = require('../models/carsdb');
-const { rawData, schema } = require('../models/carsdb');
 
 const carsControll = {
   viewCars: (req, res) => {
@@ -37,6 +40,15 @@ const carsControll = {
   },
 
   postCar: (req, res) => {
+    const rawData = _lodash2.default.pick(req.body, ['state', 'status', 'price', 'manufacturer', 'model', 'body_type']);
+    const schema = _joi2.default.object().keys({
+      state: _joi2.default.string().required(),
+      status: _joi2.default.string().required(),
+      price: _joi2.default.string().alphanum().required(),
+      manufacturer: _joi2.default.string().required(),
+      model: _joi2.default.string().required(),
+      body_type: _joi2.default.string().required()
+    });
     const results = _joi2.default.validate(rawData, schema);
     if (results.error === null) {
       // update data

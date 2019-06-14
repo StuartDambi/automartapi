@@ -88,7 +88,7 @@ router.put('/:id/price', (req, res) => {
     });
   }
   if (req.user.id !== details.owner) {
-    return res.send({
+    return res.status(400).send({
       status: res.statusCode,
       data: 'cannot perform this action'
     });

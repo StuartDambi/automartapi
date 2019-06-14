@@ -8,7 +8,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-const { cardb, validate } = require('../models/cars');
+const { cardb } = require('../models/cars');
 
 const router = _express2.default.Router();
 
@@ -29,22 +29,6 @@ router.get('/:id', (req, res) => {
 });
 
 // Creating an AD
-router.post('/add', async (req, res) => {
-  const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
 
-  const newCar = {
-    state: req.body.state,
-    price: req.body.price,
-    manufacturer: req.body.manufacturer,
-    model: req.body.model,
-    body_type: req.body.body_type
-  };
-  cardb.push(undefined.newCar);
-  return res.status(200).send({
-    status: res.statusCode,
-    data: newCar
-  });
-});
 
 module.exports = router;
