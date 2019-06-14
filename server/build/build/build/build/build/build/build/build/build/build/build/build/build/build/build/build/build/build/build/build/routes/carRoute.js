@@ -40,7 +40,7 @@ router.post('/add', async (req, res) => {
     model: req.body.model,
     body_type: req.body.body_type
   };
-  undefined.newCar = await newCar.save();
+  cardb.push(undefined.newCar);
   return res.status(200).send({
     status: res.statusCode,
     data: newCar
