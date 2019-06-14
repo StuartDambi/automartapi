@@ -27,8 +27,8 @@ function _interopRequireDefault(obj) {
 const app = (0, _express2.default)();
 app.use(_express2.default.json());
 app.use('/api/v1/cars', _carRoute2.default);
-app.use('/api/v1/users', _userRoute2.default);
-app.use('/api/v1/auth', _authRoute2.default);
+app.use('/api/v1/uath', _userRoute2.default);
+app.use('/api/v1/auth/signip', _authRoute2.default);
 
 // configs
 console.log(`Application name: ${_config2.default.get('name')}`);

@@ -8,7 +8,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-const User = [{
+const users = [{
   id: 1,
   email: 'jonathanaurugai@gmail.com',
   first_name: 'Jonathan',
@@ -45,6 +45,6 @@ function authenticateUser(req) {
   return _joi2.default.validate(req, schema);
 }
 
-exports.User = User;
+exports.users = users;
 exports.validate = validateUser;
 exports.authenticateUser = authenticateUser;
