@@ -4,13 +4,13 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _userController = require('../controllers/userController');
-
-var _userController2 = _interopRequireDefault(_userController);
-
 var _auth = require('../middleware/auth');
 
 var _auth2 = _interopRequireDefault(_auth);
+
+var _userController = require('../controllers/userController');
+
+var _userController2 = _interopRequireDefault(_userController);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

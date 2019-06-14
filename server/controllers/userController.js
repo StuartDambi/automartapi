@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import Joi from '@hapi/joi';
 import generatePassword from './helpers/generatePassword';
-import _ from 'lodash';
 
 
 const { users } = require('../models/users');

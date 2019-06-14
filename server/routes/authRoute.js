@@ -1,6 +1,7 @@
 import Joi from '@hapi/joi';
 import { compare } from 'bcryptjs';
 import express from 'express';
+import _ from 'lodash';
 import generateToken from '../controllers/helpers/generatePassword';
 
 const { users } = require('../models/users');

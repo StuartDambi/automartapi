@@ -22,8 +22,8 @@ function authenticateUser(req, next) {
     email: _joi2.default.string().min(3).max(255).required().email(),
     password: _joi2.default.string().min(5).max(255).required()
   };
-  _joi2.default.validate(req, schema);
-  next();
+  if (schema) return _joi2.default.validate(req, schema);
+  return next();
 }
 exports.validateUserData = validateUserData;
 exports.authenticateUser = authenticateUser;
