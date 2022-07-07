@@ -36,7 +36,7 @@
     "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "save": "^2.4.0"
